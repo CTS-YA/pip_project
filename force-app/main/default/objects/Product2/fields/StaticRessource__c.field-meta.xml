@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>StaticRessource__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+VALUE(MID(ProductCode,0,6)) &lt;= 019199, &apos;ProductImages1&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 019199 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 081198, &apos;ProductImages2&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 081198 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 082705, &apos;ProductImages3&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 100013 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 152192, &apos;ProductImages4&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 152192 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 206998, &apos;ProductImages5&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 206998 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 216279, &apos;ProductImages6&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 216279 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 227775, &apos;ProductImages7&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 227775 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 240886, &apos;ProductImages8&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 240886 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 250199, &apos;ProductImages9&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 250199 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 261992, &apos;ProductImages10&apos;,
+IF(
+VALUE(MID(ProductCode,0,6)) &gt; 261992 &amp;&amp; VALUE(MID(ProductCode,0,6)) &lt;= 280626, &apos;ProductImages11&apos;,
+NULL
+)
+)
+)
+)
+)
+)
+)
+)
+)
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Static Ressource To Use</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

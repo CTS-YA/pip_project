@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FunctionalFamilyLevel2__c</fullName>
+    <label>Functional Family Level 2</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>FunctionalFamilyLevel2</valueSetName>
+    </valueSet>
+</CustomField>

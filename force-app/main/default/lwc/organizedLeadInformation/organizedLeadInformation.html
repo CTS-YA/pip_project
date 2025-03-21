@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="Lead Information" icon-name="standard:lead">
+        
+        <lightning-button label="Get Lead Info" onclick={handleGetLeadInfo}></lightning-button>
+        
+
+        <template if:true={leadData}>
+            <lightning-datatable
+                data={leadData}
+                columns={columns}
+                key-field="key">
+            </lightning-datatable>
+        </template>
+        
+        <template if:true={error}>
+            error
+        </template>
+    </lightning-card>
+</template>

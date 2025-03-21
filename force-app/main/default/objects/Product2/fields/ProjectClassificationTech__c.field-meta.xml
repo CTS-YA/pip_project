@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProjectClassificationTech__c</fullName>
+    <label>Project Classification Tech</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>A1</fullName>
+                <default>false</default>
+                <label>A1</label>
+            </value>
+            <value>
+                <fullName>B2</fullName>
+                <default>false</default>
+                <label>B2</label>
+            </value>
+            <value>
+                <fullName>B4</fullName>
+                <default>false</default>
+                <label>B4</label>
+            </value>
+            <value>
+                <fullName>B1-3-5, C1, D5</fullName>
+                <default>false</default>
+                <label>B1-3-5, C1, D5</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
