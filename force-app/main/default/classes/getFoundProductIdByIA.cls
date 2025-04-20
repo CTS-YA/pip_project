@@ -1,9 +1,8 @@
 public  class getFoundProductIdByIA {
-    public static String  getFoundProductIdByIA(String leadId) {
+    public static String  getFoundProductIdByIA(String leadId, Map<String, String> leadInformation) {
         // Create a Map to represent the Lead's properties
         Map<String, Object> leadProperties = new Map<String, Object>();
-        System.debug('leadId'+ leadId);
-        Map<String, String> leadInformation = LeadInformationGetter.leadInformationGetter(leadId);
+        
         String jsonString = JSON.serialize(leadInformation);
 
         // Wrap the leadProperties in a WrappedValue
@@ -16,6 +15,8 @@ public  class getFoundProductIdByIA {
 
         // Invoke the Prompt 
         String response = PromptUtils.invokePrompt('return_product', inputParams);
+
+        System.debug('returnProductALL: '+ response);
 
         // Convert the JSON response to a Map<String, String>
        

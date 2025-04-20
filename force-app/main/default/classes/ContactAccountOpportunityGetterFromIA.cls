@@ -1,6 +1,7 @@
 public  class ContactAccountOpportunityGetterFromIA {
 public static Map<String, Object> ContactAccountOpportunityGetterFromIA(String leadId) {
-            
+        Lead leadRecord = [SELECT Id, FirstName, LastName, Email, Phone FROM Lead WHERE Id = :leadId LIMIT 1];
+        System.debug('leadRecord:'+ leadRecord);
         // Create a Map to represent the Lead's properties
         Map<String, Object> leadProperties = new Map<String, Object>();
         leadProperties.put('id', leadId);
