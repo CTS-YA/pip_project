@@ -2,16 +2,22 @@ public with sharing class CreateOpportunityUsingIA {
     @InvocableMethod(label='CreateOpportunityUsingIA' description='CreateOpportunityUsingIA')
     public static void handleOpportunityCreation(List<Lead> newLeads) {
         List<Case> caseTreatedToUpdate = new List<Case>();
-        Case caseTreated= new Case();
+        Case caseTreated = new Case();
 
         try {
             // Retrieve the first case in 'processing' status
-            List<Case>casesTreated = [SELECT Id, Subject, Status, It_is_trated_with_IA__c 
-                           FROM Case 
-                           WHERE Id = '500Kc00000AML25IAH'
-                           LIMIT 1];
-             caseTreated = casesTreated[0];
-            System.debug('caseTreated: ' + caseTreated);
+            List<Case> casesTreated = [SELECT Id, Subject, Status, It_is_trated_with_IA__c 
+                                        FROM Case 
+                                        WHERE It_is_trated_with_IA__c = 'processing'
+                                        ORDER BY LastModifiedDate DESC
+                                        LIMIT 1];
+            if (!casesTreated.isEmpty()) {
+                caseTreated = casesTreated[0];
+                System.debug('caseTreated: ' + caseTreated);
+            } else {
+                System.debug('No cases found in processing status.');
+                return; // Exit if no case found
+            }
 
             Set<Id> setLeads = new Set<Id>();
             for (Lead lead : newLeads) {
@@ -28,7 +34,6 @@ public with sharing class CreateOpportunityUsingIA {
             List<SBQQ__QuoteLine__c> quoteLinesToInsert = new List<SBQQ__QuoteLine__c>(); // List for Quote Lines
             Map<OpportunityLineItem, Integer> counterOpportunityLineItem = new Map<OpportunityLineItem, Integer>();
             Map<SBQQ__QuoteLine__c, Integer> counterQuoteLine = new Map<SBQQ__QuoteLine__c, Integer>();
-            
 
             // Get the Standard Pricebook Id
             Id standardPricebookId = Test.isRunningTest() ? 
@@ -209,28 +214,18 @@ public with sharing class CreateOpportunityUsingIA {
                 quoteLine.SBQQ__Quote__c = quotesToInsert[index].Id;
             }
 
-          
-
             System.debug('quoteLinesToInsert: ' + quoteLinesToInsert);
             if (!quoteLinesToInsert.isEmpty()) {
                 insert quoteLinesToInsert;
             }
-            caseTreated.It_is_trated_with_IA__c = 'treated';
-            caseTreatedToUpdate.add(caseTreated);
-            update caseTreatedToUpdate;
-
-            
         } catch (Exception exception1) {
             System.debug('Exception: ' + exception1.getMessage());
             caseTreated.It_is_trated_with_IA__c = 'failed';
-            System.debug('givenException'+exception1.getMessage().contains('Duplicate id in list'));
             if (exception1.getMessage().contains('Duplicate id in list')) {
-            caseTreated.It_is_trated_with_IA__c = 'treated';
-
+                caseTreated.It_is_trated_with_IA__c = 'treated';
             }
-            caseTreatedToUpdate.add(caseTreated);
-            update caseTreatedToUpdate;
-
+            // Update the case status if needed
+            update caseTreated;
         }
     }
 

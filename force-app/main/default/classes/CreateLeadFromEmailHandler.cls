@@ -12,6 +12,7 @@ global class CreateLeadFromEmailHandler implements Schedulable {
             WHERE It_is_trated_with_IA__c = 'not treated'
             LIMIT 1
         ];
+        Map<String, String> leadData;
 
         try {
             System.debug('hello');
@@ -26,7 +27,15 @@ global class CreateLeadFromEmailHandler implements Schedulable {
                 Update usedCase;
 
                 // Extract lead data
-                Map<String, String> leadData = TransformMailToLeadUsingIA.TransformMailToLeadUsingIA(usedCase.Id);
+                try {
+                    leadData = TransformMailToLeadUsingIA.TransformMailToLeadUsingIA(usedCase.Id);
+                } catch (Exception e) {
+                    usedCase.It_is_trated_with_IA__c = 'failed';
+                    Update usedCase;
+
+
+                }
+                
                 System.debug('leadData' + leadData);
 
                 Lead newLead = new Lead();
@@ -106,6 +115,7 @@ global class CreateLeadFromEmailHandler implements Schedulable {
                 // Insert the new leads
                 if (!leads.isEmpty()) {
                     insert leads;
+                    
                 }
                 usedCase.It_is_trated_with_IA__c = 'treated';
                 Update usedCase;

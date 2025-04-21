@@ -16,4 +16,53 @@
             error
         </template>
     </lightning-card>
+
+    <lightning-card title="Product List" icon-name="custom:custom63">
+        <lightning-button label="Show All Products" onclick={handleGetProduct}></lightning-button>
+        
+        <template if:true={productsList}>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Suggestions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={productsList} for:item="product">
+                        <tr key={product.name}>
+                            <td>
+                                <strong>{product.name}</strong>
+                            </td>
+                            <td>
+                                <template if:true={product.product_found}>
+                                    <p>Product found: {product.product_name}</p>
+                                </template>
+                                <template if:false={product.product_found}>
+                                    <p>Not found</p>
+                                </template>
+                            </td>
+                            <td>
+                                <template if:false={product.product_found}>
+                                    <ul>
+                                        <template for:each={product.suggestions} for:item="suggestion">
+                                            <li key={suggestion.product_id}>
+                                                {suggestion.product_name}
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+    
+        <template if:true={error}>
+            <p class="error">Error: {error.message}</p>
+        </template>
+    </lightning-card>
+    
 </template>

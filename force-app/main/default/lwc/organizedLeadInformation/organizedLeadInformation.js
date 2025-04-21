@@ -1,5 +1,6 @@
 import { LightningElement, track, wire, api } from 'lwc';
-import leadInformationGetter from '@salesforce/apex/LeadInformationGetter.leadInformationGetter';
+import getSomeSuggestionsOfProductsByIA from '@salesforce/apex/getSomeSuggestionsOfProductsByIA.getSomeSuggestionsOfProductsByIA';
+
 //import { getRecordId } from 'lightning/uiRecordApi';
 
 
@@ -9,6 +10,8 @@ export default class LeadInfoTable extends LightningElement {
     @track leadData;
     @track error;
     @api recordId;
+    @track productsList = [];
+    ;
 
     /*@wire(getRecordId)
     wiredRecordId({ error, data }) {
@@ -29,6 +32,35 @@ export default class LeadInfoTable extends LightningElement {
 
     handleDescriptionChange(event) {
         this.description = event.target.value;
+    }
+    
+    handleGetProduct() {
+        console.log('Fetching product suggestions...');
+
+        getSomeSuggestionsOfProductsByIA({ leadId: this.recordId })
+    .then(result => {
+        console.log('this.recordId: ' + result[0]+ result[1]);
+
+        // Clear previous products list
+        this.productsList = [];
+
+        // Check if result is not empty
+        if (result && Object.keys(result).length > 0) {
+            Object.keys(result).forEach(key => {
+                this.productsList.push({ name: key, ...result[key] });
+            });
+            console.log('Product list:', this.productsList);
+        } else {
+            console.log('No products found for this lead.');
+            this.productsList = [];
+        }
+    })
+    .catch(error => {
+        console.log('this.recordId: ' + this.recordId);
+        this.error = error;
+        this.productsList = undefined;
+        console.error('Error fetching product suggestions:', error);
+    });
     }
 
     handleGetLeadInfo() {
